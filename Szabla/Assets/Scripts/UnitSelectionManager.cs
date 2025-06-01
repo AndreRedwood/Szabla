@@ -23,6 +23,11 @@ public class UnitSelectionManager : MonoBehaviour
 
 	private List<GameObject> groundMarkers = new List<GameObject>();
 
+	public int DFormationUnitCount = 6;
+	public int DFormationRanks = 2;
+	public float DFormationRotation = 0;
+	public Formation DFormation = new Formation(1f, 1f); 
+
 	private Camera cam;
 
 	private void Awake()
@@ -40,6 +45,7 @@ public class UnitSelectionManager : MonoBehaviour
 	private void Start()
 	{
 		cam = Camera.main;
+		FormationCreator.Instance.GenerateFormation(DFormationUnitCount, DFormationRanks, DFormationRotation, DFormation);
 	}
 
 	private void Update()
