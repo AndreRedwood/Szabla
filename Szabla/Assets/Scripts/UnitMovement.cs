@@ -16,17 +16,8 @@ public class UnitMovement : MonoBehaviour
 		agent = GetComponent<NavMeshAgent>();
     }
 
-    private void Update()
+    public void MoveOrder(Vector3 destination)
     {
-        if(Input.GetMouseButtonDown(1))
-		{
-			RaycastHit hit;
-			Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-
-			if(Physics.Raycast(ray, out hit, Mathf.Infinity, ground))
-			{
-				agent.SetDestination(hit.point);
-			}
-		}
+		agent.SetDestination(destination);
     }
 }
