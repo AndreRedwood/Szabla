@@ -17,7 +17,11 @@ public class UnitSelectionManager : MonoBehaviour
 	[SerializeField]
 	private LayerMask ground;
 	[SerializeField]
-	private GameObject groundMarker;
+	private GameObject groundMarkerPrefab;
+	[SerializeField]
+	private const float GroundMarkerOffset = 0.1f;
+
+	private List<GameObject> groundMarkers = new List<GameObject>();
 
 	private Camera cam;
 
@@ -72,12 +76,21 @@ public class UnitSelectionManager : MonoBehaviour
 
 			if (Physics.Raycast(ray, out hit, Mathf.Infinity, ground))
 			{
-				groundMarker.transform.position = hit.point + new Vector3(0f,0.1f,0f); //turn into offset!
+				foreach (var marker in groundMarkers)
+				{
+					Destroy(marker.gameObject);
+				}
+				groundMarkers.Clear();
+
+				GameObject groundMarker = Instantiate(groundMarkerPrefab);
+				groundMarkers.Add(groundMarker);
+				groundMarker.transform.position = hit.point + new Vector3(0f, GroundMarkerOffset, 0f);
 				groundMarker.SetActive(true);
 				foreach (GameObject unit in SelectedUnitsList) 
 				{
 					unit.GetComponent<UnitMovement>().MoveOrder(hit.point); //add formation movement for group
 				}
+
 			}
 		}
 	}
@@ -88,7 +101,11 @@ public class UnitSelectionManager : MonoBehaviour
 		{
 			TriggerSelectionIndicator(unit, false);
 		}
-		groundMarker.SetActive(false);
+		foreach(var marker in groundMarkers)
+		{
+			Destroy(marker.gameObject);
+		}
+		groundMarkers.Clear();
 		SelectedUnitsList.Clear();
 
 	}
