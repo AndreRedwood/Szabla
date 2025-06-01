@@ -7,10 +7,10 @@ public class UnitSelectionManager : MonoBehaviour
 {
 	public static UnitSelectionManager Instance { get; set; }
 
-	[SerializeField]
 	private List<GameObject> allUnitsList = new List<GameObject>();
-	[SerializeField]
+	public List<GameObject> AllUnitsList { get { return allUnitsList; } }
 	private List<GameObject> selectedUnitsList = new List<GameObject>();
+	public List <GameObject> SelectedUnitsList { get { return selectedUnitsList; } }
 
 	[SerializeField]
 	private LayerMask clickable;
@@ -65,7 +65,7 @@ public class UnitSelectionManager : MonoBehaviour
 			}
 		}
 
-		if (Input.GetMouseButtonDown(1) && selectedUnitsList.Count > 0)
+		if (Input.GetMouseButtonDown(1) && SelectedUnitsList.Count > 0)
 		{
 			RaycastHit hit;
 			Ray ray = cam.ScreenPointToRay(Input.mousePosition);
@@ -74,7 +74,7 @@ public class UnitSelectionManager : MonoBehaviour
 			{
 				groundMarker.transform.position = hit.point + new Vector3(0f,0.1f,0f); //turn into offset!
 				groundMarker.SetActive(true);
-				foreach (GameObject unit in selectedUnitsList) 
+				foreach (GameObject unit in SelectedUnitsList) 
 				{
 					unit.GetComponent<UnitMovement>().MoveOrder(hit.point); //add formation movement for group
 				}
@@ -82,36 +82,44 @@ public class UnitSelectionManager : MonoBehaviour
 		}
 	}
 
-	private void DeselctAll()
+	public void DeselctAll()
 	{
-		foreach(var unit in selectedUnitsList)
+		foreach(var unit in SelectedUnitsList)
 		{
 			TriggerSelectionIndicator(unit, false);
 		}
 		groundMarker.SetActive(false);
-		selectedUnitsList.Clear();
+		SelectedUnitsList.Clear();
 
 	}
 
-	private void SelectUnit(GameObject unit, int mode = 0) //add unit display
+	public void SelectUnit(GameObject unit, int mode = 0) //add unit display
 	{
 		if (mode == 0)
 		{
 			DeselctAll();
-			selectedUnitsList.Add(unit);
+			SelectedUnitsList.Add(unit);
 			TriggerSelectionIndicator(unit, true);
 		}
 		else if (mode == 1)
 		{
-			if (!selectedUnitsList.Contains(unit))
+			if (!SelectedUnitsList.Contains(unit))
 			{
-				selectedUnitsList.Add(unit);
+				SelectedUnitsList.Add(unit);
 				TriggerSelectionIndicator(unit, true);
 			}
 			else
 			{
 				TriggerSelectionIndicator(unit, false);
-				selectedUnitsList.Remove(unit);
+				SelectedUnitsList.Remove(unit);
+			}
+		}
+		else if (mode == 2)
+		{
+			if (!SelectedUnitsList.Contains(unit)) 
+			{
+				SelectedUnitsList.Add(unit);
+				TriggerSelectionIndicator(unit, true);
 			}
 		}
 	}
