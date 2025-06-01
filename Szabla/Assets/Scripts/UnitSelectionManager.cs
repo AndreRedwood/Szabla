@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using System;
 
 public class UnitSelectionManager : MonoBehaviour
 {
@@ -26,7 +27,7 @@ public class UnitSelectionManager : MonoBehaviour
 	public int DFormationUnitCount = 6;
 	public int DFormationRanks = 2;
 	public float DFormationRotation = 0;
-	public Formation DFormation = new Formation(1f, 1f); 
+	public Formation DFormation = new Formation(2f, 1.6f); 
 
 	private Camera cam;
 
@@ -92,9 +93,39 @@ public class UnitSelectionManager : MonoBehaviour
 				groundMarkers.Add(groundMarker);
 				groundMarker.transform.position = hit.point + new Vector3(0f, GroundMarkerOffset, 0f);
 				groundMarker.SetActive(true);
-				foreach (GameObject unit in SelectedUnitsList) 
+
+				if (SelectedUnitsList.Count > 1)
 				{
-					unit.GetComponent<UnitMovement>().MoveOrder(hit.point); //add formation movement for group
+					Vector3 centroid = Vector3.zero;
+					foreach (GameObject unit in SelectedUnitsList)
+					{
+						centroid += unit.transform.position;
+					}
+					centroid /= SelectedUnitsList.Count;
+					float angle = (float)Math.Round(Mathf.Atan2(
+						centroid.z - hit.point.z,
+						centroid.x - hit.point.x)
+						* Mathf.Rad2Deg, 5
+						);
+					List<Vector2> positions = FormationCreator.Instance.GenerateFormation(
+						selectedUnitsList.Count, 3, angle, DFormation);
+					for (int i = 0; i < SelectedUnitsList.Count; i++)
+					{
+						SelectedUnitsList[i].GetComponent<UnitMovement>().MoveOrder(new Vector3(
+							hit.point.x + positions[i].x,
+							hit.point.y,
+							hit.point.z + positions[i].y
+							));
+						Debug.Log(positions[i].x + " " + positions[i].y);
+						//add formation movement for group
+					}
+				}
+				else
+				{
+					foreach (GameObject unit in SelectedUnitsList)
+					{
+						unit.GetComponent<UnitMovement>().MoveOrder(hit.point); //add formation movement for group
+					}
 				}
 
 			}
