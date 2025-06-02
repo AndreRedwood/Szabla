@@ -18,6 +18,7 @@ public class UnitMovement : MonoBehaviour
 
     public void MoveOrder(Vector3 destination)
     {
-		agent.SetDestination(destination);
+		//agent.SetDestination(destination);
+		//rework to steering behaviour
     }
 }

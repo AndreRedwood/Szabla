@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using System;
+using UnityEditor;
 
 public class UnitSelectionManager : MonoBehaviour
 {
@@ -22,12 +23,27 @@ public class UnitSelectionManager : MonoBehaviour
 	[SerializeField]
 	private const float GroundMarkerOffset = 0.1f;
 
-	private List<GameObject> groundMarkers = new List<GameObject>();
+	public List<GameObject> groundMarkers = new List<GameObject>();
 
-	public int DFormationUnitCount = 6;
-	public int DFormationRanks = 2;
-	public float DFormationRotation = 0;
-	public Formation DFormation = new Formation(2f, 1.6f); 
+	[SerializeField]
+	private float defultFormationUnitGap;
+	[SerializeField]
+	private float defultFormationRankGap;
+	[SerializeField]
+	private float defultLooseFormationRandomness;
+
+	[SerializeField]
+	private bool isFrontWidhtSet = false;
+	[SerializeField]
+	private bool isFormationLoose = false;
+
+	[SerializeField]
+	private int frontWidth;
+
+	private Formation defultFormation;
+	private Formation defulfFormationLoose;
+
+	public Behavior moveBeh;
 
 	private Camera cam;
 
@@ -46,7 +62,14 @@ public class UnitSelectionManager : MonoBehaviour
 	private void Start()
 	{
 		cam = Camera.main;
-		FormationCreator.Instance.GenerateFormation(DFormationUnitCount, DFormationRanks, DFormationRotation, DFormation);
+		defultFormation = new Formation(
+			defultFormationUnitGap,
+			defultFormationRankGap
+			);
+		defulfFormationLoose = new Formation(
+			defultFormation.UnitGap, 
+			defultFormation.RankGap, 
+			defultLooseFormationRandomness);
 	}
 
 	private void Update()
@@ -108,15 +131,22 @@ public class UnitSelectionManager : MonoBehaviour
 						* Mathf.Rad2Deg, 5
 						);
 					List<Vector2> positions = FormationCreator.Instance.GenerateFormation(
-						selectedUnitsList.Count, 3, angle, DFormation);
+						selectedUnitsList.Count, angle, 
+						isFormationLoose ? defulfFormationLoose : defultFormation, 
+						isFrontWidhtSet ? frontWidth : -1);
 					for (int i = 0; i < SelectedUnitsList.Count; i++)
 					{
-						SelectedUnitsList[i].GetComponent<UnitMovement>().MoveOrder(new Vector3(
+						//SelectedUnitsList[i].GetComponent<UnitMovement>().MoveOrder(new Vector3(
+						//	hit.point.x + positions[i].x,
+						//	hit.point.y,
+						//	hit.point.z + positions[i].y
+						//	));
+						selectedUnitsList[i].GetComponent<FlockAgent>().Destination = new Vector3(
 							hit.point.x + positions[i].x,
 							hit.point.y,
 							hit.point.z + positions[i].y
-							));
-						Debug.Log(positions[i].x + " " + positions[i].y);
+							);
+						selectedUnitsList[i].GetComponent<FlockAgent>().behavior = moveBeh;
 						//add formation movement for group
 					}
 				}
@@ -124,7 +154,16 @@ public class UnitSelectionManager : MonoBehaviour
 				{
 					foreach (GameObject unit in SelectedUnitsList)
 					{
-						unit.GetComponent<UnitMovement>().MoveOrder(hit.point); //add formation movement for group
+						float angle = (float)Math.Round(Mathf.Atan2(
+						unit.transform.position.z - hit.point.z,
+						unit.transform.position.x - hit.point.x)
+						* Mathf.Rad2Deg, 5
+						);
+						//Debug.Log(angle);
+						//unit.GetComponent<FlockAgent>().Destination = hit.point;
+						unit.GetComponent<FlockAgent>().Destination = hit.point;
+						unit.GetComponent<FlockAgent>().behavior = moveBeh;
+						//unit.GetComponent<UnitMovement>().MoveOrder(hit.point); //add formation movement for group
 					}
 				}
 

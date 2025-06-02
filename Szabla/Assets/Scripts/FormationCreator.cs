@@ -7,8 +7,6 @@ public class FormationCreator : MonoBehaviour
 {
 	public static FormationCreator Instance { get; set; }
 
-	public GameObject prefabTest;
-
 	private void Awake()
 	{
 		if(Instance != null && Instance != this)
@@ -21,8 +19,20 @@ public class FormationCreator : MonoBehaviour
 		}
 	}
 
-	public List<Vector2> GenerateFormation(int unitCount, int rankWidth, float rotation, Formation formation)
+	public List<Vector2> GenerateFormation(int unitCount, float rotation, Formation formation, int rankWidth = -1)
 	{
+		if(rankWidth < 0)
+		{
+			//move to separate function
+			switch(unitCount) 
+			{
+				case < 4: rankWidth = unitCount; break;
+				case < 13: rankWidth = 4; break;
+				case < 21: rankWidth = 5; break;
+				default: rankWidth = 8; break;
+			}
+		}
+
 		int ranks = (unitCount / rankWidth);
 		float rankLength = formation.UnitGap * rankWidth;
 		List<Vector2> result = new List<Vector2>();
