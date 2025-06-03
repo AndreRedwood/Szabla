@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58aaee130fc89904da7531397494b41a, type: 3}
   m_Name: Separation
   m_EditorClassIdentifier: 
-  threshold: 1.6
-  decayCoefficient: -25
+  threshold: 1.8
+  decayCoefficient: -30

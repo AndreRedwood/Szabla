@@ -181,6 +181,7 @@ GameObject:
   - component: {fileID: 2130802260175896918}
   - component: {fileID: 3803618092395369189}
   - component: {fileID: 2149574142015289979}
+  - component: {fileID: -215797467605869236}
   - component: {fileID: -5032932771917271174}
   - component: {fileID: 2626908724299357714}
   m_Layer: 7
@@ -320,7 +321,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   behavior: {fileID: 0}
-  moveSpeed: 1
+  Destination: {x: 0, y: 0, z: 0}
+  moveSpeed: 0.8
+--- !u!114 &-215797467605869236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5881894572124156099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f38953e617b280a4f920f2beb8b44762, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Zaporozec
+  health: 100
+  maxHealth: 100
 --- !u!54 &-5032932771917271174
 Rigidbody:
   m_ObjectHideFlags: 0
