@@ -43,7 +43,7 @@ public class UnitSelectionManager : MonoBehaviour
 	private Formation defultFormation;
 	private Formation defulfFormationLoose;
 
-	public Behavior moveBeh;
+	public MoveBehavior moveBeh;
 
 	private Camera cam;
 
@@ -67,8 +67,8 @@ public class UnitSelectionManager : MonoBehaviour
 			defultFormationRankGap
 			);
 		defulfFormationLoose = new Formation(
-			defultFormation.UnitGap, 
-			defultFormation.RankGap, 
+			defultFormation.UnitGap * 2, 
+			defultFormation.RankGap * 2, 
 			defultLooseFormationRandomness);
 	}
 
@@ -146,7 +146,7 @@ public class UnitSelectionManager : MonoBehaviour
 							hit.point.y,
 							hit.point.z + positions[i].y
 							);
-						selectedUnitsList[i].GetComponent<FlockAgent>().behavior = moveBeh;
+						selectedUnitsList[i].GetComponent<FlockAgent>().Behavior = moveBeh;
 						//add formation movement for group
 					}
 				}
@@ -162,7 +162,7 @@ public class UnitSelectionManager : MonoBehaviour
 						//Debug.Log(angle);
 						//unit.GetComponent<FlockAgent>().Destination = hit.point;
 						unit.GetComponent<FlockAgent>().Destination = hit.point;
-						unit.GetComponent<FlockAgent>().behavior = moveBeh;
+						unit.GetComponent<FlockAgent>().Behavior = moveBeh;
 						//unit.GetComponent<UnitMovement>().MoveOrder(hit.point); //add formation movement for group
 					}
 				}

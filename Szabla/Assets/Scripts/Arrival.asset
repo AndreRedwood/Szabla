@@ -9,6 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 780fdf51a3e7e724f9da6b0b5c05147f, type: 3}
-  m_Name: Cohesion
+  m_Script: {fileID: 11500000, guid: 4a638072db9387642b57508d36c79f09, type: 3}
+  m_Name: Arrival
   m_EditorClassIdentifier: 
+  targetRadius: 0.1
+  slowRadius: 3

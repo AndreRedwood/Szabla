@@ -320,12 +320,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   behavior: {fileID: 0}
-  flock: {fileID: 0}
-  IsMoving: 0
-  Angle: 0
-  currentVelocity: {x: 0, y: 0, z: 0}
-  StoppingDistance: 0.3
-  RotationSpeed: 100
+  moveSpeed: 1
 --- !u!54 &-5032932771917271174
 Rigidbody:
   m_ObjectHideFlags: 0
