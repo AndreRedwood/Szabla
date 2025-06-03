@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 [RequireComponent(typeof(Collider))]
 public class FlockAgent : MonoBehaviour
@@ -15,7 +16,7 @@ public class FlockAgent : MonoBehaviour
 	[SerializeField]
 	private MoveBehavior behavior = null;
 	public MoveBehavior Behavior { get { return behavior; } set { behavior = value; } }
-	public Vector3 Destination { get; set; }
+	public Vector3 Destination;
 
 	[SerializeField]
 	private float moveSpeed = 1f;
@@ -24,6 +25,7 @@ public class FlockAgent : MonoBehaviour
     {
         agentCollider = GetComponent<Collider>();
 		body = GetComponent<Rigidbody>();
+		Destination = body.position;
     }
 
 	private void FixedUpdate()
@@ -45,6 +47,12 @@ public class FlockAgent : MonoBehaviour
 				body.rotation = Quaternion.Euler(0, steering.angular, 0);
 			}
 		}
+	}
+
+	private void OnDrawGizmos()
+	{
+		Gizmos.color = Color.yellow;
+		Gizmos.DrawLine(transform.position, Destination);
 	}
 
 	//add variable radius

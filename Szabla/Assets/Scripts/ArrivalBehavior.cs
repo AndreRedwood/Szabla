@@ -33,7 +33,7 @@ public class ArrivalBehavior : MoveBehavior
 		}
 		else
 		{
-			targetSpeed = speedFactor * (distance / slowRadius);
+			targetSpeed = speedFactor * (distance / slowRadius) * 2f;
 		}
 
 		Vector3 targetVelocity = directiom;

@@ -9,6 +9,8 @@ public class FormationCreator : MonoBehaviour
 
 	public static FormationCreator Instance { get; set; }
 
+	public GameObject debugMarker;
+
 	private void Awake()
 	{
 		if(Instance != null && Instance != this)
