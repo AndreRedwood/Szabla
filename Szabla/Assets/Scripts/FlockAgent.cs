@@ -13,13 +13,29 @@ public class FlockAgent : MonoBehaviour
 	public Collider AgentCollider { get { return agentCollider; } }
 	private Rigidbody body;
 
+	[Header("UnitStatistics")]
+	public string unitName;
 	[SerializeField]
-	private MoveBehavior behavior = null;
-	public MoveBehavior Behavior { get { return behavior; } set { behavior = value; } }
-	public Vector3 Destination;
-
+	private int maxHealth;
+	[SerializeField] 
+	private int health;
+	public int[] Health { get { return new int[2] {health, maxHealth}; } }
 	[SerializeField]
 	private float moveSpeed = 1f;
+
+	[Header("Equipnment")]
+	[SerializeField]
+	private List<Weapon> weapons;
+	public List<Weapon> Weapons { get {  return weapons; } }
+
+	[Header("AI Properties")]
+	[SerializeField]
+	private MoveBehavior moveBehavior = null;
+	public MoveBehavior Behavior { get { return moveBehavior; } set { moveBehavior = value; } }
+	[SerializeField]
+	private Vector3 destination;
+	public Vector3 Destination { get { return destination; } set { destination = value; } }
+
 
     void Start()
     {
@@ -30,9 +46,9 @@ public class FlockAgent : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		if (behavior != null)
+		if (moveBehavior != null)
 		{
-			SteeringData steering = behavior.CalculateMove(this, GetNearbyObjects(this));
+			SteeringData steering = moveBehavior.CalculateMove(this, GetNearbyObjects(this));
 
 			if (steering.linear.magnitude > MoveBehavior.speedFactor)
 			{
