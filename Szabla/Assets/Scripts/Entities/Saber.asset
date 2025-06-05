@@ -12,3 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16e8bb033b71cf0479461152b8d7a609, type: 3}
   m_Name: Saber
   m_EditorClassIdentifier: 
+  name: Saber
+  damage: 20

@@ -23,6 +23,13 @@ public class FlockAgent : MonoBehaviour
 	[SerializeField]
 	private float moveSpeed = 1f;
 
+	[SerializeField]
+	private int skill = 4;
+	public int Skill { get { return skill; } }
+	[SerializeField]
+	private int morale = 5;
+	public int Morale { get { return morale; } }
+
 	[Header("Equipnment")]
 	[SerializeField]
 	private List<Weapon> weapons;

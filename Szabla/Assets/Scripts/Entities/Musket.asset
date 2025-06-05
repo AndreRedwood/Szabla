@@ -12,9 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7451082b6da88bc4481672380be87973, type: 3}
   m_Name: Musket
   m_EditorClassIdentifier: 
-  loadingTime: 0
+  name: Musket
+  damage: 80
+  efficientRange: 20
+  maximalRange: 50
+  loadingTime: 5
   dispersion:
-  - 0
-  - 0
-  misfirePercentChance: 0
+  - 0.1
+  - 0.3
+  misfirePercentChance: 0.25
   bulletPrefab: {fileID: 0}

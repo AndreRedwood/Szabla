@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a638072db9387642b57508d36c79f09, type: 3}
   m_Name: Arrival
   m_EditorClassIdentifier: 
-  targetRadius: 0.2
+  targetRadius: 0.3
   slowRadius: 6

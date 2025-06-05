@@ -51,6 +51,7 @@ public class UnitSelectionManager : MonoBehaviour
 	public MoveBehavior moveBeh;
 
 	private Camera cam;
+	private SingleUnitSelectWindow singleSelectWindow;
 
 	private void Awake()
 	{
@@ -75,6 +76,7 @@ public class UnitSelectionManager : MonoBehaviour
 			defultFormation.UnitGap * 2, 
 			defultFormation.RankGap * 2, 
 			defultLooseFormationRandomness);
+		singleSelectWindow = GetComponent<SingleUnitSelectWindow>();
 	}
 
 	private void Update()
@@ -205,7 +207,7 @@ public class UnitSelectionManager : MonoBehaviour
 		}
 		groundMarkers.Clear();
 		SelectedUnitsList.Clear();
-
+		singleSelectWindow.Deselect();
 	}
 
 	public void SelectUnit(GameObject unit, int mode = 0) //add unit display
@@ -215,6 +217,7 @@ public class UnitSelectionManager : MonoBehaviour
 			DeselctAll();
 			SelectedUnitsList.Add(unit);
 			TriggerSelectionIndicator(unit, true);
+			singleSelectWindow.Select(unit.GetComponent<FlockAgent>());
 		}
 		else if (mode == 1)
 		{
