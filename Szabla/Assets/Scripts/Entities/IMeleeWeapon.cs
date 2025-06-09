@@ -7,4 +7,6 @@ public interface IMeleeWeapon
 	float Reach { get; }
 
 	void Attack(FlockAgent target, int meleeSkill);
+
+	public IMeleeWeapon GetInterface { get; }
 }

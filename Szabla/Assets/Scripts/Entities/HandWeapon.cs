@@ -13,4 +13,6 @@ public class HandWeapon : Weapon, IMeleeWeapon
 	{
 		throw new System.NotImplementedException();
 	}
+
+	public IMeleeWeapon GetInterface { get { return this; } }
 }

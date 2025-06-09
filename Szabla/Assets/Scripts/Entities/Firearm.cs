@@ -12,7 +12,16 @@ public class Firearm : Weapon, IRangedWeapon
 	private float maximalRange;
 	public float MaximalRange { get { return maximalRange; } }
 
-	public float ReloadProgress { get; }
+	[SerializeField]
+	private float reloadProgress = 0f;
+	public float ReloadProgress 
+	{ 
+		get 
+		{
+			if (reloadProgress >= loadingTime) return 1f;
+			return reloadProgress / loadingTime;
+		} 
+	}
 	public bool IsLoaded { get { return ReloadProgress == 1f ? true : false; } }
 	[SerializeField]
 	private float loadingTime;
@@ -27,11 +36,16 @@ public class Firearm : Weapon, IRangedWeapon
 
 	public void Reload()
 	{
-		throw new System.NotImplementedException();
+		if(reloadProgress < loadingTime)
+		{
+			reloadProgress += Time.fixedDeltaTime;
+		}
 	}
 
 	public void Shoot(Vector3 target, int skill, int shootingSkill)
 	{
 		throw new System.NotImplementedException();
 	}
+
+	public IRangedWeapon GetInterface { get { return this; } }
 }

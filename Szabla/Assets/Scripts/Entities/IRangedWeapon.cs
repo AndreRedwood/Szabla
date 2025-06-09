@@ -12,4 +12,6 @@ public interface IRangedWeapon
 	void Shoot(Vector3 target, int skill, int shootingSkill);
 
 	void Reload();
+
+	public IRangedWeapon GetInterface { get; }
 }

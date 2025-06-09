@@ -32,8 +32,15 @@ public class FlockAgent : MonoBehaviour
 
 	[Header("Equipnment")]
 	[SerializeField]
+	private List<IMeleeWeapon> meleeWeapons;
+	public List<IMeleeWeapon> MeleeWeapons { get { return meleeWeapons; } }
+	[SerializeField]
+	private List<IRangedWeapon> rangedWeapons;
+	public List<IRangedWeapon> RangedWeapons { get {  return rangedWeapons; } }
+	[SerializeField]
 	private List<Weapon> weapons;
-	public List<Weapon> Weapons { get {  return weapons; } }
+	public List<Weapon> Weapons { get { return weapons; } }
+
 
 	[Header("AI Properties")]
 	[SerializeField]
@@ -49,7 +56,19 @@ public class FlockAgent : MonoBehaviour
         agentCollider = GetComponent<Collider>();
 		body = GetComponent<Rigidbody>();
 		Destination = body.position;
-    }
+		//foreach (Weapon weapon in weapons)
+		//{
+		//	if (weapon is IRangedWeapon)
+		//	{
+		//		var temp = weapon as IRangedWeapon;
+		//		Debug.Log("aye!");
+		//		rangedWeapons.Add(temp);
+		//		Debug.Log(rangedWeapons.Count);
+		//	}
+		//}
+		////rangedWeapons.Add((IRangedWeapon)weapons[1]);
+		//meleeWeapons.Add((IMeleeWeapon)weapons[0]);
+	}
 
 	private void FixedUpdate()
 	{
@@ -70,6 +89,10 @@ public class FlockAgent : MonoBehaviour
 				body.rotation = Quaternion.Euler(0, steering.angular, 0);
 			}
 		}
+		//if (RangedWeapons[0].ReloadProgress < 1f)
+		//{
+		//	RangedWeapons[0].Reload();
+		//}
 	}
 
 	private void OnDrawGizmos()
