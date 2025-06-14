@@ -32,11 +32,11 @@ public class FlockAgent : MonoBehaviour
 
 	[Header("Equipnment")]
 	[SerializeField]
-	private List<IMeleeWeapon> meleeWeapons;
-	public List<IMeleeWeapon> MeleeWeapons { get { return meleeWeapons; } }
+	private List<WeaponTemplate> meleeWeapons;
+	public List<WeaponTemplate> MeleeWeapons { get { return meleeWeapons; } }
 	[SerializeField]
-	private List<IRangedWeapon> rangedWeapons;
-	public List<IRangedWeapon> RangedWeapons { get {  return rangedWeapons; } }
+	private List<WeaponTemplate> rangedWeapons;
+	public List<WeaponTemplate> RangedWeapons { get {  return rangedWeapons; } }
 	[SerializeField]
 	private List<Weapon> weapons;
 	public List<Weapon> Weapons { get { return weapons; } }

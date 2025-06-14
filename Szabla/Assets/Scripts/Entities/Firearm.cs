@@ -2,41 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Weapons/Ranged/Firearm")]
-public class Firearm : Weapon, IRangedWeapon
+[System.Serializable]
+public class Firearm : Weapon
 {
-	[SerializeField]
 	private float efficientRange;
 	public float EfficientRange { get { return efficientRange; } }
-	[SerializeField]
 	private float maximalRange;
 	public float MaximalRange { get { return maximalRange; } }
 
-	[SerializeField]
+	private float reloadTime;
 	private float reloadProgress = 0f;
 	public float ReloadProgress 
 	{ 
 		get 
 		{
-			if (reloadProgress >= loadingTime) return 1f;
-			return reloadProgress / loadingTime;
+			if (reloadProgress >= reloadTime) return 1f;
+			return reloadProgress / reloadTime;
 		} 
 	}
 	public bool IsLoaded { get { return ReloadProgress == 1f ? true : false; } }
-	[SerializeField]
-	private float loadingTime;
 
-	[SerializeField]
-	private float[] dispersion = new float[2];
-	[SerializeField] [Range (0f, 100f)]
+	private float[] dispersion;
 	private float misfirePercentChance;
 
-	[SerializeField]
-	private GameObject bulletPrefab;
+	//Bullet To do!
 
 	public void Reload()
 	{
-		if(reloadProgress < loadingTime)
+		if(reloadProgress < reloadTime)
 		{
 			reloadProgress += Time.fixedDeltaTime;
 		}
@@ -47,5 +40,15 @@ public class Firearm : Weapon, IRangedWeapon
 		throw new System.NotImplementedException();
 	}
 
-	public IRangedWeapon GetInterface { get { return this; } }
+	public Firearm(string name, int damage, float[] range, float reloadTime, float[] dispersion, float misfirePercentChance) : 
+		base(name, damage)
+	{
+		if(range.Length != 2) throw new System.ArgumentException("incorrect weapon range data");
+		efficientRange = range[0];
+		maximalRange = range[1];
+		this.reloadTime = reloadTime;
+		if(dispersion.Length != 2) throw new System.ArgumentException("incorrect weapon dispersion data");
+		this.dispersion = dispersion;
+		this.misfirePercentChance = misfirePercentChance;
+	}
 }
